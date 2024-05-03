@@ -1,0 +1,176 @@
+{{ block "index" . }}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Guitar Rich: Update JSS</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/dist/tailwind.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <script
+      src="https://unpkg.com/htmx.org@1.9.9"
+      integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <main class="container mx-auto py-12 px-4 md:px-6 lg:px-8">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <div class="text-center">
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
+            GuitarRich: JSS SDK Upgrade Guide
+          </h1>
+          <p class="mt-4 text-gray-500 dark:text-gray-400">
+            Select your current JSS version and the version you want to upgrade
+            to and we'll help you get there.
+          </p>
+        </div>
+        <div class="bg-white rounded-lg shadow-md p-6">
+          <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label for="starting-version" class="text-sm font-medium">
+                Starting SDK Version
+              </label>
+              <select id="starting-version"
+                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+                <option value="0.0.1">0.0.1</option>
+                <option value="0.0.2">0.0.2</option>
+                <option value="0.0.3">0.0.3</option>
+                <option value="0.0.4">0.0.4</option>
+                <option value="0.0.5">0.0.5</option>
+              </select>
+              <button
+                type="button"
+                role="combobox"
+                aria-controls="radix-:r41:"
+                aria-expanded="false"
+                aria-autocomplete="none"
+                dir="ltr"
+                data-state="closed"
+              >
+                <span style="pointer-events: none"></span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4 opacity-50"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <select
+                aria-hidden="true"
+                tabindex="-1"
+                style="
+                  position: absolute;
+                  border: 0px;
+                  width: 1px;
+                  height: 1px;
+                  padding: 0px;
+                  margin: -1px;
+                  overflow: hidden;
+                  clip: rect(0px, 0px, 0px, 0px);
+                  white-space: nowrap;
+                  overflow-wrap: normal;
+                "
+              ></select>
+            </div>
+            <div class="space-y-2">
+              <label for="target-version" class="text-sm font-medium">
+                Target SDK Version
+              </label>
+              <button
+                type="button"
+                role="combobox"
+                aria-controls="radix-:r42:"
+                aria-expanded="false"
+                aria-autocomplete="none"
+                dir="ltr"
+                data-state="closed"
+                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                <span style="pointer-events: none"></span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="h-4 w-4 opacity-50"
+                  aria-hidden="true"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+              <select
+                aria-hidden="true"
+                tabindex="-1"
+                style="
+                  position: absolute;
+                  border: 0px;
+                  width: 1px;
+                  height: 1px;
+                  padding: 0px;
+                  margin: -1px;
+                  overflow: hidden;
+                  clip: rect(0px, 0px, 0px, 0px);
+                  white-space: nowrap;
+                  overflow-wrap: normal;
+                "
+              ></select>
+            </div>
+          </div>
+        </div>
+        <div data-state="closed" class="bg-white rounded-lg shadow-md">
+          <button
+            type="button"
+            aria-controls="radix-:r43:"
+            aria-expanded="false"
+            data-state="closed"
+            class="flex items-center justify-between px-6 py-4 text-lg font-medium"
+          >
+            Upgrade Steps
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="h-5 w-5 transition-transform"
+            >
+              <path d="m6 9 6 6 6-6"></path>
+            </svg>
+          </button>
+          <div
+            data-state="closed"
+            id="radix-:r43:"
+            hidden=""
+            class="px-6 pb-6"
+            style=""
+          ></div>
+        </div>
+      </div>
+    </main>
+  </body>
+  {{ end }}
+</html>
