@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+ * Adding some base styles for the markdown as we can't 
+ * add the styles easily in the Go string to markdown
+ * conversion package
+ */
