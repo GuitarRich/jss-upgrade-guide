@@ -1,1 +1,1 @@
-web: guitarrich-jss-upgrade-guide
+web: cmd 
