@@ -5,13 +5,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
+	"os"
 	"sort"
 	"time"
 
 	"github.com/hashicorp/go-version"
+	"github.com/joho/godotenv"
 )
 
+func getEnvVar(key string) string {
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+	return os.Getenv(key)
+}
 func getVersions() []*version.Version {
 
 	fmt.Printf("getting versions from Content Hub One\n")
@@ -38,8 +48,7 @@ func getVersions() []*version.Version {
 		"https://edge.sitecorecloud.io/api/graphql/v1",
 		bytes.NewBuffer(jsonResult))
 
-	//apiKey := "SDlQZ0tSRi9BWmt0cEl0RTZvZTczOStWQzgwNENnTmR4S1REMVNUT1lqWT18aGMtcGFydG5lci1lbmFibGVtZW50LWVhLWVmMTM1"
-	apiKey := "Y3lMTWRJU1Q2VldGR3paT3BSZlF2NkduRzAxRXgybzJGcXRKUTkwT3BIdz18aGMtcGFydG5lci1lbmFibGVtZW50LWVhLWVmMTM1"
+	apiKey := getEnvVar("CONTENT_API_KEY")
 	fmt.Printf("apiKey: %s\n", apiKey)
 
 	newRequest.Header.Set("Content-Type", "application/json")
@@ -109,8 +118,7 @@ func getInstructions() []UpgradeStep {
 		"https://edge.sitecorecloud.io/api/graphql/v1",
 		bytes.NewBuffer(jsonResult))
 
-	//apiKey := "SDlQZ0tSRi9BWmt0cEl0RTZvZTczOStWQzgwNENnTmR4S1REMVNUT1lqWT18aGMtcGFydG5lci1lbmFibGVtZW50LWVhLWVmMTM1"
-	apiKey := "Y3lMTWRJU1Q2VldGR3paT3BSZlF2NkduRzAxRXgybzJGcXRKUTkwT3BIdz18aGMtcGFydG5lci1lbmFibGVtZW50LWVhLWVmMTM1"
+	apiKey := getEnvVar("CONTENT_API_KEY")
 	fmt.Printf("apiKey: %s\n", apiKey)
 
 	newRequest.Header.Set("Content-Type", "application/json")

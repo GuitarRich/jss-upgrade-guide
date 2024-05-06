@@ -7,7 +7,10 @@ require (
 	golang.org/x/time v0.5.0
 )
 
-require github.com/yuin/goldmark v1.7.1 // indirect
+require (
+	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/yuin/goldmark v1.7.1 // indirect
+)
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
