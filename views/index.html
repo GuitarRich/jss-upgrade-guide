@@ -17,13 +17,28 @@
       integrity="sha384-QFjmbokDn2DjBjq+fM+8LUIVrAgqcNW2s0PjAxHETgRn9l4fvX31ZxDxvwQnyMOX"
       crossorigin="anonymous"
     ></script>
+    <script>
+    document.addEventListener("DOMContentLoaded", (event) => {
+        document.body.addEventListener('htmx:beforeSwap', function(evt) {
+            if (evt.detail.xhr.status === 422) {
+                // allow 422 responses to swap as we are using this as a signal that
+                // a form was submitted with bad data and want to rerender with the
+                // errors
+                //
+                // set isError to false to avoid error logging in console
+                evt.detail.shouldSwap = true;
+                evt.detail.isError = false;
+            }
+        });
+    })
+    </script>
   </head>
   <body>
     <main class="container mx-auto py-12 px-4 md:px-6 lg:px-8">
       <div class="max-w-3xl mx-auto space-y-6">
         <div class="text-center">
           <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">
-            GuitarRich: JSS SDK Upgrade Guide
+            {{ .Title }}
           </h1>
           <p class="mt-4 text-gray-500 dark:text-gray-400">
             Select your current JSS version and the version you want to upgrade
@@ -31,146 +46,63 @@
           </p>
         </div>
         <div class="bg-white rounded-lg shadow-md p-6">
-          <div class="grid grid-cols-2 gap-4">
+          <form class="grid grid-cols-2 gap-4"
+            hx-post="/api/upgrade-steps"
+            hx-target="#upgrade-steps"
+            hx-swap="outerHTML"
+            hx-trigger="change from:#starting-version, change from:#target-version"
+          >
             <div class="space-y-2">
               <label for="starting-version" class="text-sm font-medium">
                 Starting SDK Version
               </label>
-              <select id="starting-version"
-                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-                <option value="0.0.1">0.0.1</option>
-                <option value="0.0.2">0.0.2</option>
-                <option value="0.0.3">0.0.3</option>
-                <option value="0.0.4">0.0.4</option>
-                <option value="0.0.5">0.0.5</option>
-              </select>
-              <button
-                type="button"
-                role="combobox"
-                aria-controls="radix-:r41:"
-                aria-expanded="false"
-                aria-autocomplete="none"
-                dir="ltr"
-                data-state="closed"
-              >
-                <span style="pointer-events: none"></span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="h-4 w-4 opacity-50"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </button>
               <select
-                aria-hidden="true"
-                tabindex="-1"
-                style="
-                  position: absolute;
-                  border: 0px;
-                  width: 1px;
-                  height: 1px;
-                  padding: 0px;
-                  margin: -1px;
-                  overflow: hidden;
-                  clip: rect(0px, 0px, 0px, 0px);
-                  white-space: nowrap;
-                  overflow-wrap: normal;
-                "
-              ></select>
+                id="starting-version" name="starting-version"
+                class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {{ range .Versions }}
+                <option value="{{ . }}">{{ . }}</option>
+                {{ end }}
+              </select>
             </div>
             <div class="space-y-2">
               <label for="target-version" class="text-sm font-medium">
                 Target SDK Version
               </label>
-              <button
-                type="button"
-                role="combobox"
-                aria-controls="radix-:r42:"
-                aria-expanded="false"
-                aria-autocomplete="none"
-                dir="ltr"
-                data-state="closed"
+              <select
+                id="target-version" name="target-version"
                 class="flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                <span style="pointer-events: none"></span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="h-4 w-4 opacity-50"
-                  aria-hidden="true"
-                >
-                  <path d="m6 9 6 6 6-6"></path>
-                </svg>
-              </button>
-              <select
-                aria-hidden="true"
-                tabindex="-1"
-                style="
-                  position: absolute;
-                  border: 0px;
-                  width: 1px;
-                  height: 1px;
-                  padding: 0px;
-                  margin: -1px;
-                  overflow: hidden;
-                  clip: rect(0px, 0px, 0px, 0px);
-                  white-space: nowrap;
-                  overflow-wrap: normal;
-                "
-              ></select>
+                {{ range .Versions }}
+                <option value="{{ . }}">{{ . }}</option>
+                {{ end }}
+              </select>
             </div>
-          </div>
+          </form>
         </div>
-        <div data-state="closed" class="bg-white rounded-lg shadow-md">
-          <button
-            type="button"
-            aria-controls="radix-:r43:"
-            aria-expanded="false"
-            data-state="closed"
-            class="flex items-center justify-between px-6 py-4 text-lg font-medium"
-          >
-            Upgrade Steps
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="h-5 w-5 transition-transform"
-            >
-              <path d="m6 9 6 6 6-6"></path>
-            </svg>
-          </button>
-          <div
-            data-state="closed"
-            id="radix-:r43:"
-            hidden=""
-            class="px-6 pb-6"
-            style=""
-          ></div>
-        </div>
-      </div>
+        {{ template "steps" .UpgradeSteps }}
     </main>
   </body>
-  {{ end }}
 </html>
+{{ end }}
+
+{{ block "steps" . }}
+  <div id="upgrade-steps" class="mt-8" data-id="30">
+    <h2 class="text-2xl font-bold mb-4" data-id="31">Upgrade Steps</h2>
+    <div class="space-y-4" data-id="32">
+      <div
+        class="bg-gray-100 rounded-lg p-4"
+        data-id="33"
+      >
+        {{ range . }}
+        <h3 class="text-lg font-bold mb-2" data-id="34">
+          {{ .Version }}
+        </h3>
+        <div class="prose prose-slate prose-sm" data-id="35">
+          {{ .Steps }}
+        </div>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+ {{ end }}
