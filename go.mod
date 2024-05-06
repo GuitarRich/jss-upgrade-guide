@@ -1,4 +1,4 @@
-module guitarrich.tv/name
+module github.com/GuitarRich/jss-upgrade-guide
 
 go 1.22
 

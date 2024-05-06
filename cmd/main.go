@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"os"
 	"text/template"
 
 	"github.com/hashicorp/go-version"
@@ -98,5 +99,9 @@ func main() {
 		return c.Render(200, "steps", upgradeSteps)
 	})
 
-	e.Logger.Fatal(e.Start(":42069"))
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "42069"
+	}
+	e.Logger.Fatal(e.Start(":" + port))
 }
